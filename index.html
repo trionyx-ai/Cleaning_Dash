@@ -343,6 +343,12 @@ function excelDateTimeToParts(value){
   return {date, time};
 }
 
+// Tolerant column lookup: matches header by prefix, so a garbled unit like "(©O)" instead of "(㎡)" still works
+function pickCol(row, prefix){
+  const k = Object.keys(row).find(h=>h.trim().toLowerCase().startsWith(prefix.toLowerCase()));
+  return k===undefined ? undefined : row[k];
+}
+
 function parseRow(row){
   const startVal = row['Start time'] ?? row['开始时间'];
   const endVal = row['End time'] ?? row['结束时间'];
@@ -352,8 +358,8 @@ function parseRow(row){
   const date = startParts.date || excelDateTimeToParts(dateVal).date;
 
   const durationMin = Number(row['Cleaning time(min)'] ?? row['清洁时长(min)']) || 0;
-  const plannedArea = Number(row['Programmed cleaning area(㎡)'] ?? row['计划清洁面积㎡']) || 0;
-  const actualArea = Number(row['Actual cleaning area(㎡)'] ?? row['实际清洁面积㎡']) || 0;
+  const plannedArea = Number(pickCol(row,'Programmed cleaning area') ?? row['计划清洁面积㎡']) || 0;
+  const actualArea = Number(pickCol(row,'Actual cleaning area') ?? row['实际清洁面积㎡']) || 0;
   const completion = Number(row['Task completion rate(%)'] ?? row['任务完成率%']) || 0;
   const plannedAreaFt = toSqft(plannedArea);
   const actualAreaFt = toSqft(actualArea);
