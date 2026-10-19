@@ -1,4 +1,4 @@
-vin,Vehicle name,Vehicle type,Date,Task name,Cleaning time(min),Programmed cleaning area(©O),Actual cleaning area(©O),Cleaning efficiency(©O/h),Task completion rate(%),Start time,End time
+vin,Vehicle name,Vehicle type,Date,Task name,Cleaning time(min),Programmed cleaning area(Â©O),Actual cleaning area(Â©O),Cleaning efficiency(Â©O/h),Task completion rate(%),Start time,End time
 IDPWXB613216F90128,Steve,Mix1,2026/10/1 3:30,-2 scrub,16,77.56,73,273.75,94.1,2026/10/1 3:30,2026/10/1 3:46
 IDPWXB613216F90128,Steve,Mix1,2026/10/1 7:48,27-16 vacuum,177,776.95,797,270.17,100,2026/10/1 7:48,2026/10/1 10:46
 IDPWXB613216F90128,Steve,Mix1,2026/10/1 14:00,15-3 vacuum,155,702.79,732,283.35,100,2026/10/1 14:00,2026/10/1 16:35
