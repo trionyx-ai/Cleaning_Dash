@@ -43,9 +43,9 @@ button{transition:background .15s,border-color .15s,color .15s;}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px;}
 
 /* ---------- Header ---------- */
-.topband{background:var(--ink);color:#EAF3F1;padding:36px 0 30px;}
-.topband .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
-.topband .brand{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.topband{background:var(--ink);color:#EAF3F1;padding:28px 0 24px;}
+.topband .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;padding-bottom:0;}
+.topband .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(12,140,134,0.25);}
 .eyebrow{font-size:13px;color:#9FB6B2;letter-spacing:0.02em;}
 h1{font-size:30px;font-weight:600;margin:2px 0 0;line-height:1.15;}
@@ -71,13 +71,12 @@ h1{font-size:30px;font-weight:600;margin:2px 0 0;line-height:1.15;}
 .load-status.demo{background:var(--amber-tint);border-color:#EAC79A;color:#8A4E12;}
 .load-status.warn{background:var(--amber-tint);border-color:#EAC79A;color:#8A4E12;}
 .load-status.hidden{display:none;}
-.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);}
 .kpi{padding:18px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 -1px -1px 0;}
 .kpi .num{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:600;color:var(--ink);line-height:1.15;}
 .kpi .num small{font-size:13px;font-weight:500;color:var(--ink-soft);}
 .kpi .lbl{margin-top:6px;font-size:12px;color:var(--ink-soft);line-height:1.4;}
 .kpi.warn .num{color:var(--red);}
-.kpi.nodata .num{color:var(--ink-faint);font-size:19px;}
 
 /* ---------- Cards ---------- */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px;}
@@ -88,10 +87,10 @@ h1{font-size:30px;font-weight:600;margin:2px 0 0;line-height:1.15;}
 .chart-block{margin-top:18px;}
 .chart-block:first-of-type{margin-top:6px;}
 .chart-title{font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:10px;}
-.chart-scroll{overflow-x:auto;padding-bottom:4px;}
+.chart-scroll{overflow:hidden;}
 .svg-chart{display:block;max-width:none;height:auto;overflow:visible;}
 .svg-chart .ref-line{stroke:var(--ink-faint);stroke-width:1;stroke-dasharray:4 4;}
-.svg-chart .ref-lbl{font-family:'Inter',sans-serif;font-size:10px;fill:var(--ink-soft);}
+.svg-chart .ref-lbl{font-family:'Inter',sans-serif;font-size:10px;fill:var(--ink-soft);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;}
 .svg-chart .grid-line{stroke:var(--line);stroke-width:1;}
 .svg-chart .axis-lbl{font-family:'Inter',sans-serif;font-size:10px;fill:var(--ink-faint);}
 .svg-chart .bar{fill:var(--accent);}
@@ -144,8 +143,39 @@ table.hist tbody tr:hover{background:var(--bg);}
 
 footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 
+
+/* ---------- Range heading, deltas, empty state, tooltip ---------- */
+.range-head{margin-top:20px;margin-bottom:12px;}
+.range-title{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:22px;font-weight:600;line-height:1.2;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.range-title .badge{font-family:'Inter',system-ui,sans-serif;font-size:11px;font-weight:600;color:var(--accent-deep);background:var(--accent-tint);border-radius:20px;padding:3px 10px;}
+.range-sub{margin-top:4px;font-size:13px;color:var(--ink-soft);line-height:1.5;}
+.kpi .delta{margin-top:8px;font-size:12px;font-weight:600;}
+.kpi .delta small{font-weight:400;color:var(--ink-faint);}
+.kpi .delta.up{color:var(--green);}
+.kpi .delta.down{color:var(--red);}
+.kpi .delta.flat,.kpi .delta.neutral{color:var(--ink-soft);}
+.empty-box{margin-top:20px;background:var(--surface);border:1px dashed var(--ink-faint);border-radius:4px;padding:36px 24px;text-align:center;}
+.empty-box[hidden]{display:none;}
+.empty-box h3{margin:0 0 6px;font-size:17px;}
+.empty-box p{margin:0 0 16px;font-size:13.5px;color:var(--ink-soft);}
+.empty-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+button[hidden]{display:none;}
+.more-wrap{display:flex;justify-content:center;margin-top:14px;}
+.hist-sort{display:none;font-size:12.5px;color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:7px 12px;background:var(--bg);}
+#tip{position:fixed;left:0;top:0;z-index:60;pointer-events:none;opacity:0;background:var(--ink);color:#EAF3F1;font-size:12px;line-height:1.55;padding:8px 11px;border-radius:4px;box-shadow:0 4px 14px rgba(18,33,31,0.25);max-width:240px;white-space:nowrap;}
+#tip.show{opacity:1;}
+#tip b{font-weight:600;color:#fff;}
+.svg-chart .hit{fill:transparent;}
+.svg-chart .slot:hover .hit{fill:rgba(12,140,134,0.07);}
+.svg-chart .slot:hover .bar{fill:var(--accent-deep);}
+.svg-chart .guide{stroke:var(--ink-faint);stroke-width:1;opacity:0;pointer-events:none;}
+.svg-chart .slot:hover .guide{opacity:0.7;}
+.svg-chart .slot:hover .line-dot{fill:var(--accent);r:5;}
+.no-data-cell{padding:18px 10px !important;color:var(--ink-faint);}
+.no-data-cell .chip-btn{margin-left:8px;}
+
 @media (max-width:880px){
-  .kpi-row{grid-template-columns:repeat(3,1fr);}
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
   .card .loc-table{display:block;overflow-x:auto;white-space:nowrap;}
 }
 @media (max-width:560px){
@@ -155,6 +185,25 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   .kpi-row{grid-template-columns:repeat(2,1fr);}
   .presets{margin-left:0;}
 }
+
+@media (max-width:640px){
+  .card .loc-table,.card table.hist{display:block;overflow:visible;white-space:normal;}
+  .loc-table thead,table.hist thead{display:none;}
+  .loc-table tbody,table.hist tbody{display:block;}
+  .loc-table tr,table.hist tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;padding:12px 14px;margin-bottom:10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);}
+  .loc-table td,table.hist td,.loc-table tr:last-child td{display:block;padding:0;border:none;text-align:left !important;white-space:normal;font-size:13px;}
+  .loc-table td::before,table.hist td::before{content:attr(data-label);display:block;font-size:11px;font-weight:500;color:var(--ink-faint);margin-bottom:1px;font-family:'Inter',system-ui,sans-serif;}
+  .loc-table td:not([data-label])::before,table.hist td:not([data-label])::before{display:none;}
+  .card td.title-cell,.card .loc-table tr:last-child td.title-cell{grid-column:1/-1;order:-1;font-size:14.5px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--line) !important;}
+  .card td.title-cell::before{display:none;}
+  .card td[colspan]{grid-column:1/-1;}
+  .table-scroll{max-height:none;overflow:visible;border:none;margin-top:12px;}
+  table.hist tbody tr:hover{background:var(--surface);}
+  .hist-sort{display:block;}
+  .hist-tools .count{margin-left:0;width:100%;}
+  .range-title{font-size:19px;}
+}
+
 @media print{
   .date-range-bar,.tab-row,.hist-tools{display:none;}
   .table-scroll{max-height:none;overflow:visible;}
@@ -191,18 +240,28 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <div class="tab-row" id="vehicleTabs" style="margin-top:10px;"></div>
 
   <div class="kpi-section">
-    <div class="section-label"><span id="rangeLabel">Whole Pilot Period</span><span class="ln"></span></div>
     <div class="date-range-bar">
       <label>From <input type="date" id="rangeStart"></label>
       <label>To <input type="date" id="rangeEnd"></label>
       <div class="presets" id="presetRow">
         <button type="button" class="chip-btn" data-days="7">Last 7 days</button>
-        <button type="button" class="chip-btn" data-days="30">Last 30 days</button>
-        <button type="button" class="chip-btn active" id="rangeReset">Full period</button>
+        <button type="button" class="chip-btn active" data-days="30">Last 30 days</button>
+        <button type="button" class="chip-btn" id="rangeReset">Full period</button>
       </div>
     </div>
+
+    <div class="empty-box" id="emptyBox" hidden>
+      <h3 id="emptyTitle"></h3>
+      <p id="emptyText"></p>
+      <div class="empty-actions" id="emptyActions"></div>
+    </div>
+
+    <div id="results">
+    <div class="range-head">
+      <div class="range-title" id="rangeLabel"></div>
+      <div class="range-sub" id="rangeSub"></div>
+    </div>
     <div class="kpi-row" id="kpiRow"></div>
-  </div>
 
   <div class="card" style="margin-top:32px;">
     <div class="tab-row" id="periodTabs">
@@ -253,7 +312,6 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
       <thead>
         <tr>
           <th>Area</th>
-          <th class="num">Cycles</th>
           <th class="num">Planned Area (sq ft)</th>
           <th class="num">Actual Area Cleaned (sq ft)</th>
           <th class="num">Avg. Completion Rate</th>
@@ -273,6 +331,14 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     </div>
     <div class="hist-tools">
       <input type="search" id="histSearch" placeholder="Filter by area name…" aria-label="Filter task history by area name">
+      <select id="histSort" class="hist-sort" aria-label="Sort records">
+        <option value="date:-1">Newest first</option>
+        <option value="date:1">Oldest first</option>
+        <option value="actualArea:-1">Largest area</option>
+        <option value="completion:-1">Highest completion</option>
+        <option value="calcEff:-1">Highest efficiency</option>
+        <option value="durationMin:-1">Longest duration</option>
+      </select>
       <button type="button" class="chip-btn" id="exportCsv">Export CSV</button>
       <span class="count" id="histCount"></span>
     </div>
@@ -284,8 +350,6 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
             <th data-k="start">Start</th>
             <th data-k="end">End</th>
             <th data-k="task">Area / Task</th>
-            <th data-k="taskId">Task ID</th>
-            <th data-k="cycles" class="num">Cycles</th>
             <th data-k="durationMin" class="num">Duration (min)</th>
             <th data-k="plannedArea" class="num">Planned (sq ft)</th>
             <th data-k="actualArea" class="num">Actual (sq ft)</th>
@@ -296,16 +360,22 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
         <tbody id="histBody"></tbody>
       </table>
     </div>
+    <div class="more-wrap"><button type="button" class="chip-btn" id="histMore" hidden></button></div>
   </div>
+  </div><!-- /results -->
+  </div><!-- /kpi-section -->
 
   <footer>
-    <span>* Efficiency is calculated as Actual Area ÷ Cleaning Time. Cycles: No data — not tracked in this export.</span>
-    <span>Compiled from raw export · Pending Idriverplus fix for live web/app reporting</span>
+    <span>* Efficiency is calculated as Actual Area ÷ Cleaning Time.</span>
+    <span>Page version <b id="pageVersion"></b> · Data through <b id="dataThrough">—</b></span>
   </footer>
 
 </div>
 
+<div id="tip" role="tooltip"></div>
+
 <script>
+const PAGE_VERSION = 'v5 · 2026-11-03';   // bump this each time you upload a new index.html
 const SQFT_PER_SQM = 10.7639104167;
 
 function fmt(n, d=0){ return Number(n).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d}); }
@@ -363,11 +433,9 @@ function parseRow(row){
   const calcEffFt = durationMin>0 ? (actualAreaFt/(durationMin/60)) : 0;
 
 
-  const taskIdRaw = row['任务ID'] ? String(row['任务ID']).trim() : '';
   return {
     date, start: startParts.time, end: endParts.time,
     task: String(row['Task name'] ?? row['任务名称'] ?? '').trim(),
-    taskId: taskIdRaw || null,
     durationMin, plannedArea, actualArea, completion,
     plannedAreaFt, actualAreaFt, calcEffFt,
     vin: String(row['vin'] ?? '').trim(),
@@ -380,7 +448,7 @@ function parseRow(row){
 //   Old: ["FB0037","FB0057"]                                     → all treated as group "real"
 //   New: [{"id":"FB0037","group":"real"},{"id":"FB00008","group":"demo","label":"Demo"}]
 async function fetchVehicleRows(vehicleId){
-  const resp = await fetch(`data_${vehicleId}.xlsx`, {cache:'no-store'});
+  const resp = await fetch(`data_${vehicleId}.xlsx?t=${Date.now()}`, {cache:'no-store'});
   if(!resp.ok) throw new Error(`HTTP ${resp.status} fetching data_${vehicleId}.xlsx`);
   const buf = await resp.arrayBuffer();
   const wb = XLSX.read(buf, {type:'array', cellDates:false});
@@ -390,7 +458,7 @@ async function fetchVehicleRows(vehicleId){
   // G Programmed area | H Actual area | I Efficiency | J Completion % | K Start time | L End time
   const keys = ['vin','Vehicle name','Vehicle type','Date','Task name','Cleaning time(min)',
                 'Programmed cleaning area(㎡)','Actual cleaning area(㎡)','Cleaning efficiency(㎡/h)',
-                'Task completion rate(%)','Start time','End time','任务ID'];
+                'Task completion rate(%)','Start time','End time'];
   const aoa = XLSX.utils.sheet_to_json(sheet, {header:1, defval:'', raw:true});
   return aoa.slice(1)
     .filter(r=>r.some(c=>c!==''))
@@ -407,7 +475,7 @@ function normalizeManifest(raw){
 async function loadRecords(){
   const statusEl = document.getElementById('loadStatus');
   try{
-    const manifestResp = await fetch('manifest.json', {cache:'no-store'});
+    const manifestResp = await fetch(`manifest.json?t=${Date.now()}`, {cache:'no-store'});
     if(!manifestResp.ok) throw new Error('HTTP '+manifestResp.status+' fetching manifest.json');
     const rawManifest = await manifestResp.json();
     if(!Array.isArray(rawManifest) || rawManifest.length===0) throw new Error('manifest.json has no vehicle entries');
@@ -460,35 +528,66 @@ function recordsInGroup(group){
   return ALL_RECORDS.filter(r=>r.group===group);
 }
 
-function getBaseFiltered(){
+function addDays(iso, n){ const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+n); return localISO(d); }
+function daysBetween(a, b){ return Math.round((new Date(b+'T00:00:00') - new Date(a+'T00:00:00')) / 86400000); }
+
+function filterRecs(s, e){
   let recs = selectedGroup ? recordsInGroup(selectedGroup) : ALL_RECORDS;
   if(selectedVehicle !== 'all') recs = recs.filter(r=>r.vin === selectedVehicle);
-  const s = startInput.value || DATA_MIN;
-  const e = endInput.value || DATA_MAX;
-  recs = recs.filter(r => r.date >= s && r.date <= e);
-  return recs;
+  return recs.filter(r => r.date >= s && r.date <= e);
+}
+function getBaseFiltered(){
+  return filterRecs(startInput.value || DATA_MIN, endInput.value || DATA_MAX);
 }
 
 // ---------- KPI ----------
-function renderKpis(recs){
-  const real = recs;
-  const totalActualFt = real.reduce((s,r)=>s+r.actualAreaFt,0);
-  const totalMin = real.reduce((s,r)=>s+r.durationMin,0);
-  const avgEffFt = totalMin>0 ? totalActualFt / (totalMin/60) : 0;
-  const avgCompletion = real.length ? real.reduce((s,r)=>s+r.completion,0)/real.length : 0;
-
+function calcKpis(recs){
+  const area = recs.reduce((s,r)=>s+r.actualAreaFt,0);
+  const min = recs.reduce((s,r)=>s+r.durationMin,0);
+  return {
+    area, min,
+    eff: min>0 ? area/(min/60) : 0,
+    comp: recs.length ? recs.reduce((s,r)=>s+r.completion,0)/recs.length : 0,
+  };
+}
+function pctDelta(cur, prev, neutral){
+  if(!(prev>0)) return '';
+  const ch = (cur-prev)/prev*100;
+  const flat = Math.abs(ch) < 0.05;
+  const cls = flat ? 'flat' : (neutral ? 'neutral' : (ch>0 ? 'up' : 'down'));
+  return `<div class="delta ${cls}">${flat?'▬':(ch>0?'▲':'▼')} ${Math.abs(ch).toFixed(1)}% <small>vs prev. period</small></div>`;
+}
+function ptsDelta(cur, prev){
+  const ch = cur-prev;
+  const flat = Math.abs(ch) < 0.05;
+  const cls = flat ? 'flat' : (ch>0 ? 'up' : 'down');
+  return `<div class="delta ${cls}">${flat?'▬':(ch>0?'▲':'▼')} ${Math.abs(ch).toFixed(1)} pts <small>vs prev. period</small></div>`;
+}
+function renderKpis(recs, prevRecs){
+  const c = calcKpis(recs);
+  const p = (prevRecs && prevRecs.length) ? calcKpis(prevRecs) : null;
   const kpis = [
-    {num:`${fmt(totalActualFt)}<small> sq ft</small>`, lbl:'Total actual area cleaned'},
-    {num:`No data`, lbl:'Total Cycles (not tracked in export)', nodata:true},
-    {num:`${fmt(avgEffFt)}<small> sq ft/h</small>`, lbl:'Avg. cleaning efficiency'},
-    {num:`${fmt(avgCompletion,1)}<small>%</small>`, lbl:'Avg. task completion rate'},
-    {num:`${fmt(totalMin/60,1)}<small> h</small>`, lbl:'Total actual cleaning time'},
+    {num:`${fmt(c.area)}<small> sq ft</small>`, lbl:'Total actual area cleaned', d:p?pctDelta(c.area,p.area):''},
+    {num:`${fmt(c.eff)}<small> sq ft/h</small>`, lbl:'Avg. cleaning efficiency', d:p?pctDelta(c.eff,p.eff):''},
+    {num:`${fmt(c.comp,1)}<small>%</small>`, lbl:'Avg. task completion rate', d:p?ptsDelta(c.comp,p.comp):''},
+    {num:`${fmt(c.min/60,1)}<small> h</small>`, lbl:'Total actual cleaning time', d:p?pctDelta(c.min,p.min,true):''},
   ];
   document.getElementById('kpiRow').innerHTML = kpis.map(k=>`
-    <div class="kpi ${k.warn?'warn':''} ${k.nodata?'nodata':''}">
+    <div class="kpi">
       <div class="num">${k.num}</div>
       <div class="lbl">${k.lbl}</div>
+      ${k.d}
     </div>`).join('');
+}
+
+function updateRangeHead(recs, s, e, cmp){
+  const n = daysBetween(s,e)+1;
+  const full = (s===DATA_MIN && e===DATA_MAX);
+  document.getElementById('rangeLabel').innerHTML = `${esc(s)} → ${esc(e)}${full?'<span class="badge">Full period</span>':''}`;
+  const parts = [`${n} ${n===1?'day':'days'}`, `${recs.length} task records`, selectedVehicle==='all' ? 'All vehicles' : esc(selectedVehicle)];
+  if(cmp) parts.push(`compared with the previous ${n} ${n===1?'day':'days'} (${cmp.s} → ${cmp.e})`);
+  else if(!full) parts.push('no earlier data to compare with');
+  document.getElementById('rangeSub').innerHTML = parts.join(' · ');
 }
 
 // ---------- Chart helpers (SVG bar & line charts) ----------
@@ -501,19 +600,19 @@ function niceMax(v){
   return step*mag;
 }
 
-function chartWidth(el, n, perItem){
-  const avail = el.clientWidth || 720;
-  return Math.max(avail, n*perItem);
-}
+function chartWidth(el){ return Math.max(el.clientWidth || 720, 320); }
+// show every Nth x label so labels never overlap, whatever the number of days
+function labelStep(n, plotW){ return Math.max(1, Math.ceil(n / Math.max(1, Math.floor(plotW / 54)))); }
 
-function drawBarChart(containerId, labels, values, {valueSuffix='', height=220, avgLine=false}={}){
+function drawBarChart(containerId, labels, values, {valueSuffix='', height=220, avgLine=false, tips=null}={}){
   const el = document.getElementById(containerId);
-  const W = chartWidth(el, labels.length, 40);
+  const W = chartWidth(el);
   const H = height;
   const marginL=48, marginR=12, marginT=16, marginB=34;
   const plotW = W-marginL-marginR, plotH = H-marginT-marginB;
   const maxV = niceMax(Math.max(...values,1)*1.08);
   const slot = plotW/labels.length;
+  const step = labelStep(labels.length, plotW);
   const barW = Math.min(30, slot*0.6);
   const showVals = slot>=38;
   const gridCount = 4;
@@ -529,9 +628,12 @@ function drawBarChart(containerId, labels, values, {valueSuffix='', height=220, 
     const bh = (v/maxV)*plotH;
     const x = marginL + i*slot + (slot-barW)/2;
     const y = marginT + plotH - bh;
-    bars += `<rect class="bar" x="${x}" y="${y}" width="${barW}" height="${Math.max(bh,0.5)}" rx="2"><title>${esc(lab)}: ${fmt(v)}${valueSuffix}</title></rect>`;
-    if(showVals && v>0) bars += `<text class="bar-val" x="${x+barW/2}" y="${y-4}" text-anchor="middle">${fmtCompact(v)}</text>`;
-    xLbl += `<text class="axis-lbl" x="${x+barW/2}" y="${H-marginB+16}" text-anchor="middle">${esc(lab)}</text>`;
+    const tip = (tips && tips[i]) || `<b>${esc(lab)}</b><br>${fmt(v)}${valueSuffix}`;
+    bars += `<g class="slot" data-tip="${esc(tip)}"><rect class="hit" x="${marginL + i*slot}" y="${marginT}" width="${slot}" height="${plotH}"/>`
+         + `<rect class="bar" x="${x}" y="${y}" width="${barW}" height="${Math.max(bh,0.5)}" rx="2"/>`
+         + (showVals && v>0 ? `<text class="bar-val" x="${x+barW/2}" y="${y-4}" text-anchor="middle">${fmtCompact(v)}</text>` : '')
+         + `</g>`;
+    if(i%step===0 || i===labels.length-1 && (labels.length-1)%step===0) xLbl += `<text class="axis-lbl" x="${x+barW/2}" y="${H-marginB+16}" text-anchor="middle">${esc(lab)}</text>`;
   });
   let ref='';
   if(avgLine && values.length>1){
@@ -546,18 +648,18 @@ function drawBarChart(containerId, labels, values, {valueSuffix='', height=220, 
     ${ref}
     ${xLbl}
   </svg>`;
-  el.scrollLeft = el.scrollWidth; // show most recent data first when the chart is wider than the card
 }
 
-function drawLineChart(containerId, labels, values, {height=190, yMax=null, yFmt=(v)=>fmt(v), suffix='', refValue=null}={}){
+function drawLineChart(containerId, labels, values, {height=190, yMax=null, yFmt=(v)=>fmt(v), suffix='', refValue=null, tips=null}={}){
   const el = document.getElementById(containerId);
-  const W = chartWidth(el, labels.length, 40);
+  const W = chartWidth(el);
   const H = height;
   const marginL=48, marginR=18, marginT=14, marginB=34;
   const plotW = W-marginL-marginR, plotH = H-marginT-marginB;
   const validVals = values.filter(v=>v!==null);
   const maxV = yMax !== null ? yMax : niceMax(Math.max(...validVals,1)*1.1);
   const slot = labels.length>1 ? plotW/(labels.length-1) : 0;
+  const step = labelStep(labels.length, plotW);
   const x0 = labels.length>1 ? marginL : marginL + plotW/2;
   const gradId = 'grad_'+containerId;
   const gridCount = 4;
@@ -579,9 +681,16 @@ function drawLineChart(containerId, labels, values, {height=190, yMax=null, yFmt
   const base = marginT+plotH;
   const pathD = segs.map(sg=>sg.map((p,k)=>(k?'L':'M')+p.x+','+p.y).join(' ')).join(' ');
   const areaD = segs.filter(sg=>sg.length>1).map(sg=>`M${sg[0].x},${base} `+sg.map(p=>`L${p.x},${p.y}`).join(' ')+` L${sg[sg.length-1].x},${base} Z`).join(' ');
-  const dots = pts.filter(Boolean).map(p=>`<circle class="line-dot" cx="${p.x}" cy="${p.y}" r="3.5"><title>${esc(labels[p.i])}: ${yFmt(values[p.i])}${suffix}</title></circle>`).join('');
+  const hitW = labels.length>1 ? slot : plotW;
+  const dots = labels.map((lab,i)=>{
+    const x = x0 + i*slot, pt = pts[i];
+    const tip = (tips && tips[i]) || `<b>${esc(lab)}</b><br>${values[i]===null ? 'No data' : yFmt(values[i])+suffix}`;
+    return `<g class="slot" data-tip="${esc(tip)}"><rect class="hit" x="${x-hitW/2}" y="${marginT}" width="${hitW}" height="${plotH}"/>`
+         + `<line class="guide" x1="${x}" x2="${x}" y1="${marginT}" y2="${marginT+plotH}"/>`
+         + (pt ? `<circle class="line-dot" cx="${pt.x}" cy="${pt.y}" r="3.5"/>` : '') + `</g>`;
+  }).join('');
   labels.forEach((lab,i)=>{
-    xLbl += `<text class="axis-lbl" x="${x0 + i*slot}" y="${H-marginB+16}" text-anchor="middle">${esc(lab)}</text>`;
+    if(i%step===0) xLbl += `<text class="axis-lbl" x="${x0 + i*slot}" y="${H-marginB+16}" text-anchor="middle">${esc(lab)}</text>`;
   });
   let ref='';
   if(refValue!==null && refValue<=maxV){
@@ -601,7 +710,6 @@ function drawLineChart(containerId, labels, values, {height=190, yMax=null, yFmt
     ${dots}
     ${xLbl}
   </svg>`;
-  el.scrollLeft = el.scrollWidth; // show most recent data first when the chart is wider than the card
 }
 
 // ---------- Daily charts ----------
@@ -623,8 +731,9 @@ function renderDaily(recs){
   const dailyLabels = dates.map(d=>d.slice(5));
   const dailyAreaValues = dates.map(d=>byDate[d]);
   const dailyCompValues = dates.map(d=>compByDate[d].sum/compByDate[d].n);
-  drawBarChart('dailyBarChart', dailyLabels, dailyAreaValues, {valueSuffix:' sq ft', avgLine:true});
-  drawLineChart('dailyLineChart', dailyLabels, dailyCompValues, {yMax:100, yFmt:(v)=>fmt(v,0), suffix:'%', refValue:90});
+  const dailyTips = dates.map((d,i)=>`<b>${esc(d)}</b><br>Area: ${fmt(dailyAreaValues[i])} sq ft<br>Completion: ${fmt(dailyCompValues[i],1)}%`);
+  drawBarChart('dailyBarChart', dailyLabels, dailyAreaValues, {valueSuffix:' sq ft', avgLine:true, tips:dailyTips});
+  drawLineChart('dailyLineChart', dailyLabels, dailyCompValues, {yMax:100, yFmt:(v)=>fmt(v,0), suffix:'%', refValue:90, tips:dailyTips});
 }
 
 // ---------- Weekly table & charts ----------
@@ -653,15 +762,16 @@ function renderWeekly(recs){
   const weekLabels = weeks.map(W=>{ const d=new Date(W.wk+'T00:00:00'); return d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); });
   const weekAreaValues = weeks.map(W=>W.areaFt);
   const weekCompValues = weeks.map(W=>W.valid ? (W.compSum/W.valid) : null);
-  drawBarChart('weeklyBarChart', weekLabels, weekAreaValues, {valueSuffix:' sq ft', avgLine:true});
-  drawLineChart('weeklyLineChart', weekLabels, weekCompValues, {yMax:100, yFmt:(v)=>fmt(v,0), suffix:'%', refValue:90});
+  const weekTips = weeks.map((W,i)=>`<b>Week of ${esc(W.wk)}</b><br>Area: ${fmt(W.areaFt)} sq ft<br>Completion: ${weekCompValues[i]!==null ? fmt(weekCompValues[i],1)+'%' : 'No data'}`);
+  drawBarChart('weeklyBarChart', weekLabels, weekAreaValues, {valueSuffix:' sq ft', avgLine:true, tips:weekTips});
+  drawLineChart('weeklyLineChart', weekLabels, weekCompValues, {yMax:100, yFmt:(v)=>fmt(v,0), suffix:'%', refValue:90, tips:weekTips});
   document.getElementById('weekBody').innerHTML = weeks.map(W=>{
     const avgC = W.valid ? (W.compSum/W.valid) : null;
     return `<tr>
-      <td class="taskname">${W.wk}</td>
-      <td class="num">${fmt(W.areaFt)}</td>
-      <td class="num">${fmt(W.min/60,1)}</td>
-      <td class="num">${avgC!==null ? fmt(avgC,1)+'%' : '<span class="nd">No data</span>'}</td>
+      <td class="taskname title-cell" data-label="Week Of">${W.wk}</td>
+      <td class="num" data-label="Area Cleaned (sq ft)">${fmt(W.areaFt)}</td>
+      <td class="num" data-label="Cleaning Time (h)">${fmt(W.min/60,1)}</td>
+      <td class="num" data-label="Avg. Completion Rate">${avgC!==null ? fmt(avgC,1)+'%' : '<span class="nd">No data</span>'}</td>
     </tr>`;
   }).join('');
 }
@@ -677,7 +787,7 @@ function renderLocations(recs){
   });
   const locRows = Object.values(locMap).sort((a,b)=>b.actualFt-a.actualFt);
   if(locRows.length===0){
-    document.getElementById('locBody').innerHTML = `<tr><td colspan="6" class="nd">No data in selected range</td></tr>`;
+    document.getElementById('locBody').innerHTML = `<tr><td colspan="5" class="nd">No data in selected range</td></tr>`;
     return;
   }
   document.getElementById('locBody').innerHTML = locRows.map(L=>{
@@ -685,13 +795,11 @@ function renderLocations(recs){
     const eff = L.min>0 ? L.actualFt/(L.min/60) : 0;
     const pillClass = avgC>=90?'hi':(avgC>=50?'mid':'lo');
     return `<tr>
-      <td class="taskname">${esc(L.task)}</td>
-      <td class="num">${L.count}</td>
-      <td class="num"><span class="pill nd">No data</span></td>
-      <td class="num">${fmt(L.plannedFt)}</td>
-      <td class="num">${fmt(L.actualFt)}</td>
-      <td class="num"><span class="pill ${pillClass}">${fmt(avgC,1)}%</span></td>
-      <td class="num">${fmt(eff)}</td>
+      <td class="taskname title-cell" data-label="Area">${esc(L.task)}</td>
+      <td class="num" data-label="Planned Area (sq ft)">${fmt(L.plannedFt)}</td>
+      <td class="num" data-label="Actual Area Cleaned (sq ft)">${fmt(L.actualFt)}</td>
+      <td class="num" data-label="Avg. Completion Rate"><span class="pill ${pillClass}">${fmt(avgC,1)}%</span></td>
+      <td class="num" data-label="Avg. Efficiency (sq ft/h)">${fmt(eff)}</td>
     </tr>`;
   }).join('');
 }
@@ -701,6 +809,8 @@ let sortKey = 'date';
 let sortDir = -1;
 let histQuery = '';
 let visibleRows = [];
+const HIST_PAGE = 50;
+let histLimit = HIST_PAGE;
 
 function renderHist(){
   let rows = currentRecords.slice();
@@ -708,33 +818,36 @@ function renderHist(){
   rows = rows.slice().sort((a,b)=>{
     let av=a[sortKey], bv=b[sortKey];
     if(sortKey==='date'){ av = a.date+a.start; bv = b.date+b.start; }
-    if(sortKey==='cycles'){ return 0; }
     if(typeof av === 'string'){ return sortDir * String(av).localeCompare(String(bv)); }
     return sortDir * ((av||0)-(bv||0));
   });
   visibleRows = rows;
-  document.getElementById('histCount').textContent = `Showing ${rows.length} of ${currentRecords.length} records`;
+  const shown = Math.min(rows.length, histLimit);
+  document.getElementById('histCount').textContent = `Showing ${shown} of ${rows.length} records`;
   document.querySelectorAll('#histTable thead th').forEach(th=>{
-    if(th.dataset.k===sortKey && sortKey!=='cycles') th.setAttribute('aria-sort', sortDir===1?'ascending':'descending');
+    if(th.dataset.k===sortKey) th.setAttribute('aria-sort', sortDir===1?'ascending':'descending');
     else th.removeAttribute('aria-sort');
   });
+  const moreBtn = document.getElementById('histMore');
   if(rows.length===0){
-    document.getElementById('histBody').innerHTML = `<tr><td colspan="11" class="nd" style="padding:18px 10px;">No matching records. Try widening the date range or clearing the filter.</td></tr>`;
+    moreBtn.hidden = true;
+    document.getElementById('histBody').innerHTML = `<tr><td colspan="9" class="no-data-cell">${histQuery ? `No records match “${esc(histQuery)}”. <button type="button" class="chip-btn" data-clear="1">Clear filter</button>` : 'No records in this date range.'}</td></tr>`;
     return;
   }
-  document.getElementById('histBody').innerHTML = rows.map(r=>{
+  const remaining = rows.length - shown;
+  moreBtn.hidden = remaining<=0;
+  moreBtn.textContent = `Show ${Math.min(HIST_PAGE, remaining)} more · ${remaining} remaining`;
+  document.getElementById('histBody').innerHTML = rows.slice(0, shown).map(r=>{
     return `<tr>
-      <td>${r.date}</td>
-      <td>${r.start}</td>
-      <td>${r.end}</td>
-      <td>${esc(r.task)}</td>
-      <td>${r.taskId ? esc(r.taskId) : '<span class="nd">No data</span>'}</td>
-      <td class="num"><span class="nd">No data</span></td>
-      <td class="num">${r.durationMin}</td>
-      <td class="num">${fmt(r.plannedAreaFt)}</td>
-      <td class="num">${fmt(r.actualAreaFt)}</td>
-      <td class="num">${fmt(r.calcEffFt)}</td>
-      <td class="num">${fmt(r.completion,1)}</td>
+      <td data-label="Date">${r.date}</td>
+      <td data-label="Start">${r.start}</td>
+      <td data-label="End">${r.end}</td>
+      <td class="title-cell" data-label="Area / Task">${esc(r.task)}</td>
+      <td class="num" data-label="Duration (min)">${r.durationMin}</td>
+      <td class="num" data-label="Planned (sq ft)">${fmt(r.plannedAreaFt)}</td>
+      <td class="num" data-label="Actual (sq ft)">${fmt(r.actualAreaFt)}</td>
+      <td class="num" data-label="Efficiency (sq ft/h)">${fmt(r.calcEffFt)}</td>
+      <td class="num" data-label="Completion %">${fmt(r.completion,1)}</td>
     </tr>`;
   }).join('');
 }
@@ -742,7 +855,32 @@ function renderHist(){
 // ---------- Orchestration ----------
 function renderAll(recs){
   currentRecords = recs;
-  renderKpis(recs);
+  histLimit = HIST_PAGE;
+  const s = startInput.value || DATA_MIN;
+  const e = endInput.value || DATA_MAX;
+  const empty = recs.length===0;
+  document.getElementById('results').style.display = empty ? 'none' : '';
+  const box = document.getElementById('emptyBox');
+  box.hidden = !empty;
+  if(empty){
+    const full = (s===DATA_MIN && e===DATA_MAX);
+    document.getElementById('emptyTitle').textContent = 'No tasks in this date range';
+    document.getElementById('emptyText').textContent = `Nothing was logged between ${s} and ${e}${selectedVehicle!=='all' ? ' for '+selectedVehicle : ''}.`+(full?'':' Try a wider range.');
+    document.getElementById('emptyActions').innerHTML =
+      (full ? '' : `<button type="button" class="chip-btn" data-act="full">Show full period (${esc(DATA_MIN)} → ${esc(DATA_MAX)})</button>`) +
+      (selectedVehicle!=='all' ? `<button type="button" class="chip-btn" data-act="allv">Show all vehicles</button>` : '');
+    return;
+  }
+  // previous period of the same length, only when it lies fully inside the data
+  const n = daysBetween(s,e)+1;
+  const prevE = addDays(s,-1), prevS = addDays(s,-n);
+  let cmp = null, prevRecs = [];
+  if(DATA_MIN && prevS >= DATA_MIN){
+    prevRecs = filterRecs(prevS, prevE);
+    if(prevRecs.length) cmp = {s:prevS, e:prevE};
+  }
+  updateRangeHead(recs, s, e, cmp);
+  renderKpis(recs, cmp ? prevRecs : null);
   renderDaily(recs);
   renderWeekly(recs);
   renderLocations(recs);
@@ -753,6 +891,7 @@ document.querySelectorAll('#histTable thead th').forEach(th=>{
   const sort = ()=>{
     const k = th.dataset.k;
     if(sortKey===k){ sortDir *= -1; } else { sortKey = k; sortDir = 1; }
+    histLimit = HIST_PAGE;
     renderHist();
   };
   th.tabIndex = 0;
@@ -762,14 +901,59 @@ document.querySelectorAll('#histTable thead th').forEach(th=>{
 
 document.getElementById('histSearch').addEventListener('input', e=>{
   histQuery = e.target.value.trim().toLowerCase();
+  histLimit = HIST_PAGE;
   renderHist();
 });
 
+document.getElementById('histMore').addEventListener('click', ()=>{ histLimit += HIST_PAGE; renderHist(); });
+document.getElementById('histSort').addEventListener('change', e=>{
+  const [k,d] = e.target.value.split(':');
+  sortKey = k; sortDir = +d; histLimit = HIST_PAGE; renderHist();
+});
+document.getElementById('histBody').addEventListener('click', e=>{
+  if(!e.target.closest('[data-clear]')) return;
+  const input = document.getElementById('histSearch');
+  input.value = ''; histQuery = ''; histLimit = HIST_PAGE; renderHist(); input.focus();
+});
+document.getElementById('emptyActions').addEventListener('click', e=>{
+  const b = e.target.closest('button[data-act]'); if(!b) return;
+  if(b.dataset.act==='full') document.getElementById('rangeReset').click();
+  if(b.dataset.act==='allv'){ const t = document.querySelector('#vehicleTabs button[data-v="all"]'); if(t) t.click(); }
+});
+
+// ---------- Chart tooltip (instant, styled) ----------
+const tipEl = document.getElementById('tip');
+function hideTip(){ tipEl.classList.remove('show'); }
+function placeTip(x, y){
+  const r = tipEl.getBoundingClientRect(), pad = 14;
+  let left = x + pad, top = y + pad;
+  if(left + r.width > innerWidth - 8) left = x - r.width - pad;
+  if(top + r.height > innerHeight - 8) top = y - r.height - pad;
+  tipEl.style.left = Math.max(8, left) + 'px';
+  tipEl.style.top = Math.max(8, top) + 'px';
+}
+document.addEventListener('mouseover', ev=>{
+  const t = ev.target.closest && ev.target.closest('[data-tip]');
+  if(!t){ hideTip(); return; }
+  tipEl.innerHTML = t.dataset.tip;
+  tipEl.classList.add('show');
+  placeTip(ev.clientX, ev.clientY);
+});
+document.addEventListener('mousemove', ev=>{ if(tipEl.classList.contains('show')) placeTip(ev.clientX, ev.clientY); });
+document.addEventListener('mouseout', ev=>{
+  const to = ev.relatedTarget;
+  if(!to || !to.closest || !to.closest('[data-tip]')) hideTip();
+});
+document.addEventListener('click', ev=>{ if(!(ev.target.closest && ev.target.closest('[data-tip]'))) hideTip(); });
+window.addEventListener('scroll', hideTip, {passive:true});
+
+
+
 document.getElementById('exportCsv').addEventListener('click', ()=>{
-  const head = ['Date','Start','End','Area / Task','Task ID','Duration (min)','Planned (sq ft)','Actual (sq ft)','Efficiency (sq ft/h)','Completion %'];
+  const head = ['Date','Start','End','Area / Task','Duration (min)','Planned (sq ft)','Actual (sq ft)','Efficiency (sq ft/h)','Completion %'];
   const cell = v=>{ let t=String(v ?? ''); if(/^[=+\-@]/.test(t)) t="'"+t; return /[",\n]/.test(t) ? '"'+t.replace(/"/g,'""')+'"' : t; };
   const lines = [head.join(',')].concat(visibleRows.map(r=>[
-    r.date, r.start, r.end, r.task, r.taskId||'', r.durationMin,
+    r.date, r.start, r.end, r.task, r.durationMin,
     r.plannedAreaFt.toFixed(1), r.actualAreaFt.toFixed(1), r.calcEffFt.toFixed(1), r.completion.toFixed(1)
   ].map(cell).join(',')));
   const blob = new Blob(['\ufeff'+lines.join('\r\n')], {type:'text/csv;charset=utf-8'});
@@ -796,7 +980,6 @@ const endInput = document.getElementById('rangeEnd');
 function applyFilters(){
   const s = startInput.value || DATA_MIN;
   const e = endInput.value || DATA_MAX;
-  document.getElementById('rangeLabel').textContent = (s===DATA_MIN && e===DATA_MAX) ? `${DATA_MIN} → ${DATA_MAX} (full Pilot period)` : `${s} → ${e}`;
   markPreset();
   renderAll(getBaseFiltered());
 }
@@ -851,9 +1034,8 @@ function recomputeDateBoundsForGroup(){
   DATA_MIN = scoped.length ? scoped[0].date : null;
   DATA_MAX = scoped.length ? scoped[scoped.length-1].date : null;
   document.getElementById('periodDisplay').textContent = DATA_MIN ? `${DATA_MIN} → ${DATA_MAX}` : 'No data';
-  startInput.min = DATA_MIN; startInput.max = DATA_MAX; startInput.value = DATA_MIN;
+  startInput.min = DATA_MIN; startInput.max = DATA_MAX; startInput.value = DATA_MIN ? presetStart(30) : '';
   endInput.min = DATA_MIN; endInput.max = DATA_MAX; endInput.value = DATA_MAX;
-  document.getElementById('rangeLabel').textContent = DATA_MIN ? `${DATA_MIN} → ${DATA_MAX} (full Pilot period)` : 'No data';
 }
 
 function buildVehicleTabs(){
@@ -911,20 +1093,23 @@ window.addEventListener('resize', ()=>{
 });
 
 (async function init(){
+  document.getElementById('pageVersion').textContent = PAGE_VERSION;
   ALL_RECORDS = await loadRecords();
   if(ALL_RECORDS.length===0){
     document.getElementById('periodDisplay').textContent = 'No data';
     return;
   }
+  document.getElementById('pageVersion').textContent = PAGE_VERSION;
+  const lastRec = ALL_RECORDS[ALL_RECORDS.length-1];
+  document.getElementById('dataThrough').textContent = `${lastRec.date} ${lastRec.start}`;
   const groups = Array.from(new Set(ALL_RECORDS.map(r=>r.group)));
   selectedGroup = groups.includes('real') ? 'real' : groups[0];
 
   buildSourceTabs();
   recomputeDateBoundsForGroup();
   buildVehicleTabs();
-  renderAll(getBaseFiltered());
+  applyFilters();
 })();
 </script>
 </body>
 </html>
-
