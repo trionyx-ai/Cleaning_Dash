@@ -211,7 +211,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     </div>
     <div class="tabpane active" id="pane-daily">
       <h3>Daily Cleaning Performance</h3>
-      <div class="sub">Tasks with 0 area cleaned are not counted</div>
+      <div class="sub">All task records in the selected date range</div>
       <div class="chart-block">
         <div class="chart-title">Actual Area Cleaned per Day (sq ft)</div>
         <div id="dailyBarChart" class="chart-scroll"></div>
@@ -223,7 +223,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     </div>
     <div class="tabpane" id="pane-weekly">
       <h3>Weekly Cleaning Performance</h3>
-      <div class="sub">Calendar week (Mon–Sun), zero-area tasks not counted</div>
+      <div class="sub">Calendar week (Mon–Sun)</div>
       <div class="chart-block">
         <div class="chart-title">Area Cleaned per Week (sq ft)</div>
         <div id="weeklyBarChart" class="chart-scroll"></div>
@@ -236,7 +236,6 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
         <thead>
           <tr>
             <th>Week Of</th>
-            <th class="num">Valid Tasks</th>
             <th class="num">Area Cleaned (sq ft)</th>
             <th class="num">Cleaning Time (h)</th>
             <th class="num">Avg. Completion Rate</th>
@@ -254,7 +253,6 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
       <thead>
         <tr>
           <th>Area</th>
-          <th class="num">Valid Tasks</th>
           <th class="num">Cycles</th>
           <th class="num">Planned Area (sq ft)</th>
           <th class="num">Actual Area Cleaned (sq ft)</th>
@@ -364,9 +362,6 @@ function parseRow(row){
   const actualAreaFt = toSqft(actualArea);
   const calcEffFt = durationMin>0 ? (actualAreaFt/(durationMin/60)) : 0;
 
-  let category;
-  if(actualArea===0) category='zero';   // kept out of the statistics, still listed in Task History
-  else category='real';
 
   const taskIdRaw = row['任务ID'] ? String(row['任务ID']).trim() : '';
   return {
@@ -374,7 +369,7 @@ function parseRow(row){
     task: String(row['Task name'] ?? row['任务名称'] ?? '').trim(),
     taskId: taskIdRaw || null,
     durationMin, plannedArea, actualArea, completion,
-    plannedAreaFt, actualAreaFt, calcEffFt, category,
+    plannedAreaFt, actualAreaFt, calcEffFt,
     vin: String(row['vin'] ?? '').trim(),
     vehicleType: String(row['Vehicle type'] ?? row['车辆类型'] ?? '').trim(),
   };
@@ -476,7 +471,7 @@ function getBaseFiltered(){
 
 // ---------- KPI ----------
 function renderKpis(recs){
-  const real = recs.filter(r=>r.category==='real');
+  const real = recs;
   const totalActualFt = real.reduce((s,r)=>s+r.actualAreaFt,0);
   const totalMin = real.reduce((s,r)=>s+r.durationMin,0);
   const avgEffFt = totalMin>0 ? totalActualFt / (totalMin/60) : 0;
@@ -611,7 +606,7 @@ function drawLineChart(containerId, labels, values, {height=190, yMax=null, yFmt
 
 // ---------- Daily charts ----------
 function renderDaily(recs){
-  const real = recs.filter(r=>r.category==='real');
+  const real = recs;
   const byDate = {};
   const compByDate = {};
   real.forEach(r=>{
@@ -646,13 +641,13 @@ function renderWeekly(recs){
     const wk = mondayOf(r.date);
     if(!weekMap[wk]) weekMap[wk] = {wk, valid:0, areaFt:0, min:0, compSum:0};
     const W = weekMap[wk];
-    if(r.category==='real'){ W.valid++; W.areaFt+=r.actualAreaFt; W.min+=r.durationMin; W.compSum+=r.completion; }
+    W.valid++; W.areaFt+=r.actualAreaFt; W.min+=r.durationMin; W.compSum+=r.completion;
   });
   const weeks = Object.values(weekMap).sort((a,b)=>a.wk.localeCompare(b.wk));
   if(weeks.length===0){
     document.getElementById('weeklyBarChart').innerHTML = '<div class="nd" style="padding:20px 0;">No data in selected range</div>';
     document.getElementById('weeklyLineChart').innerHTML = '';
-    document.getElementById('weekBody').innerHTML = `<tr><td colspan="5" class="nd">No data in selected range</td></tr>`;
+    document.getElementById('weekBody').innerHTML = `<tr><td colspan="4" class="nd">No data in selected range</td></tr>`;
     return;
   }
   const weekLabels = weeks.map(W=>{ const d=new Date(W.wk+'T00:00:00'); return d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); });
@@ -664,7 +659,6 @@ function renderWeekly(recs){
     const avgC = W.valid ? (W.compSum/W.valid) : null;
     return `<tr>
       <td class="taskname">${W.wk}</td>
-      <td class="num">${W.valid}</td>
       <td class="num">${fmt(W.areaFt)}</td>
       <td class="num">${fmt(W.min/60,1)}</td>
       <td class="num">${avgC!==null ? fmt(avgC,1)+'%' : '<span class="nd">No data</span>'}</td>
@@ -674,7 +668,7 @@ function renderWeekly(recs){
 
 // ---------- Location table ----------
 function renderLocations(recs){
-  const real = recs.filter(r=>r.category==='real');
+  const real = recs;
   const locMap = {};
   real.forEach(r=>{
     if(!locMap[r.task]) locMap[r.task] = {task:r.task, count:0, plannedFt:0, actualFt:0, compSum:0, min:0};
@@ -683,7 +677,7 @@ function renderLocations(recs){
   });
   const locRows = Object.values(locMap).sort((a,b)=>b.actualFt-a.actualFt);
   if(locRows.length===0){
-    document.getElementById('locBody').innerHTML = `<tr><td colspan="7" class="nd">No data in selected range</td></tr>`;
+    document.getElementById('locBody').innerHTML = `<tr><td colspan="6" class="nd">No data in selected range</td></tr>`;
     return;
   }
   document.getElementById('locBody').innerHTML = locRows.map(L=>{
@@ -933,3 +927,4 @@ window.addEventListener('resize', ()=>{
 </script>
 </body>
 </html>
+
